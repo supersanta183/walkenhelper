@@ -1,6 +1,40 @@
 import React from 'react'
 
-const CatCard = ({ cat }) => {
+const CatCard = ({ cat, updateCat }) => {
+
+    const handleAddWin = async () => {
+        const newCat = {
+            ...cat,
+            wins: cat.wins + 1
+        }
+        await updateCat(newCat)
+    }
+
+    const handleRemoveWin = async () => {
+        const newCat = {
+            ...cat,
+            wins: cat.wins - 1
+        }
+        await updateCat(newCat)
+    }
+
+    const handleAddLoss = async () => {
+        const newCat = {
+            ...cat,
+            losses: cat.losses + 1
+        }
+        await updateCat(newCat)
+    }
+
+    const handleRemoveLoss = async () => {
+        const newCat = {
+            ...cat,
+            losses: cat.losses - 1
+        }
+        await updateCat(newCat)
+    }
+
+
     return (
         <div className="card w-96 bg-base-100 shadow-xl border-2 border-primary hover:border-primary-focus mt-5 ml-5 text-center">
             <div className="card-body">
@@ -21,13 +55,13 @@ const CatCard = ({ cat }) => {
                 </div>
                 <div className='flex justify-end'>
                     <div className="card-actions">
-                        <button className="btn btn-primary w-full">Add win</button>
-                        <button className="btn btn-primary w-full">Remove win</button>
+                        <button className="btn btn-primary w-full" onClick={handleAddWin}>Add win</button>
+                        <button className="btn btn-primary w-full" onClick={handleRemoveWin}>Remove win</button>
                     </div>
                     <div className="divider divider-horizontal"></div>
                     <div className="card-actions">
-                        <button className="btn btn-primary w-full">add loss</button>
-                        <button className="btn btn-primary w-full">Remove loss</button>
+                        <button className="btn btn-primary w-full" onClick={handleAddLoss}>add loss</button>
+                        <button className="btn btn-primary w-full" onClick={handleRemoveLoss}>Remove loss</button>
                     </div>
                 </div>
             </div>
