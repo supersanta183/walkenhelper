@@ -1,56 +1,78 @@
 import React from 'react'
 
-const CatCard = ({ cat, updateCat }) => {
+const CatCard = ({ cat, updateCat, fetchCats }) => {
 
     const handleAddWin = async () => {
-        const newCat = {
-            ...cat,
-            wins: cat.wins + 1
+        cat.PVPwins += 1
+        if(cat.PVPwins > 0 || cat.PVPlosses > 0) {
+            cat.winrate = Math.round((cat.PVPwins / (cat.PVPwins + cat.PVPlosses)) * 100)
+        } else {
+            cat.winrate = 0
         }
-        await updateCat(newCat)
+        await updateCat(cat)
+        fetchCats()
     }
 
     const handleRemoveWin = async () => {
-        const newCat = {
-            ...cat,
-            wins: cat.wins - 1
+        cat.PVPwins -= 1
+        if(cat.PVPwins > 0 || cat.PVPlosses > 0) {
+            cat.winrate = Math.round((cat.PVPwins / (cat.PVPwins + cat.PVPlosses)) * 100)
+        } else {
+            cat.winrate = 0
         }
-        await updateCat(newCat)
+        await updateCat(cat)
+        fetchCats()
     }
 
     const handleAddLoss = async () => {
-        const newCat = {
-            ...cat,
-            losses: cat.losses + 1
+        cat.PVPlosses += 1
+        if(cat.PVPwins > 0 || cat.PVPlosses > 0) {
+            cat.winrate = Math.round((cat.PVPwins / (cat.PVPwins + cat.PVPlosses)) * 100)
+        } else {
+            cat.winrate = 0
         }
-        await updateCat(newCat)
+        await updateCat(cat)
+        fetchCats()
     }
 
     const handleRemoveLoss = async () => {
-        const newCat = {
-            ...cat,
-            losses: cat.losses - 1
+        cat.PVPlosses -= 1
+        if(cat.PVPwins > 0 || cat.PVPlosses > 0) {
+            cat.winrate = Math.round((cat.PVPwins / (cat.PVPwins + cat.PVPlosses)) * 100)
+        } else {
+            cat.winrate = 0
         }
-        await updateCat(newCat)
+        await updateCat(cat)
+        fetchCats()
     }
 
 
     return (
-        <div className="card w-96 bg-base-100 shadow-xl border-2 border-primary hover:border-primary-focus mt-5 ml-5 text-center">
+        <div className="card w-96 bg-base-100 shadow-xl border-2 border-primary hover:border-primary-focus mt-5 lg:ml-5 ml-2 mr-2 text-center">
             <div className="card-body">
-                <div className='flex items-center justify-center mb-2'>
-                    <h2 className="card-title text-right">{cat.name}</h2>
+                <div className='flex items-center justify-center'>
+                    <h2 className="card-title text-right">{cat.name} <div className="badge badge-accent">Level: {cat.level}</div></h2>
                 </div>
-                <div className='flex'>
-                    <div className='w-1/2'>
-                        <p>Strength: {cat.strength}</p>
-                        <p>Stamina: {cat.stamina}</p>
-                        <p>Speed: {cat.speed}</p>
-                    </div>
-                    <div className='w-1/2'>
-                        <p>Level: {cat.level}</p>
-                        <p>Wins: {cat.wins}</p>
-                        <p>Losses: {cat.losses}</p>
+                <div className='flex justify-center'>
+                    <div>
+                        <div className="stats stats-vertical lg:stats-horizontal shadow">
+
+                            <div className="stat">
+                                <div className="stat-title">PVP wins</div>
+                                <div className="stat-value">{cat.PVPwins}</div>
+                            </div>
+
+                            <div className="stat">
+                                <div className="stat-title">PVP losses</div>
+                                <div className="stat-value">{cat.PVPlosses}</div>
+                            </div>
+
+                            <div className="stat">
+                                <div className="stat-title">Winrate</div>
+                                <div className="stat-value">{cat.winrate}%</div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
                 <div className='flex justify-end'>
