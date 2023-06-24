@@ -48,7 +48,7 @@ const CatCard = ({ cat, updateCat, fetchCats }) => {
 
 
     return (
-        <div className="card w-96 bg-base-100 shadow-xl border-2 border-primary hover:border-primary-focus mt-5 lg:ml-5 ml-2 mr-2 text-center">
+        <div className="card lg:w-96 bg-base-100 shadow-xl border-2 border-primary hover:border-primary-focus mt-5 lg:ml-5 ml-2 mr-2 text-center">
             <div className="card-body">
                 <div className='flex items-center justify-center'>
                     <h2 className="card-title text-right">{cat.name} <div className="badge badge-accent">Level: {cat.level}</div></h2>

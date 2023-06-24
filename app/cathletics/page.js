@@ -58,7 +58,7 @@ const page = () => {
     if (!cats) return <div>Loading...</div>
     return (
 
-        <div className='flex flex-col'>
+        <div className='flex flex-col pb-5'>
 
             {/* Modal 5 */}
             <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
@@ -83,7 +83,7 @@ const page = () => {
                     </svg>
                 </button>
             </div>
-            <div className='flex h-full'>
+            <div className='flex flex-col lg:flex-row h-full'>
                 {cats.map((cat) => (
                     <CatCard key={cat.id} cat={cat} updateCat={updateCat} fetchCats={getCats}/>
                 ))}
