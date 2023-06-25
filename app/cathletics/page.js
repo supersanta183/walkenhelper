@@ -9,7 +9,7 @@ import CatStatButtonGroup from './CatStatButtonGroup'
 import { v4 as uuidv4 } from 'uuid';
 
 const page = () => {
-    const [cats, setCats] = useState([])
+    const [cats, setCats] = useState(null)
     const [newCatName, setNewCatName] = useState(null)
     const [newCatLevel, setNewCatLevel] = useState(null)
     const [newCatRarity, setNewCatRarity] = useState(null)
@@ -44,6 +44,7 @@ const page = () => {
             name: newCatName,
             level: newCatLevel,
             rarity: newCatRarity,
+            matches: [],
             PVPwins: 0,
             PVPlosses: 0,
             winrate: 0,

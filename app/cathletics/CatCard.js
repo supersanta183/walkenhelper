@@ -1,4 +1,7 @@
 import React from 'react'
+import { v4 as uuidv4 } from 'uuid';
+import { db } from '@/firebase/firebaseApp'
+import { setDoc, doc, collection } from 'firebase/firestore'
 
 const CatCard = ({ cat, updateCat, fetchCats }) => {
 
@@ -12,8 +15,35 @@ const CatCard = ({ cat, updateCat, fetchCats }) => {
         fetchCats()
     }
 
+    const addWonMatch = async (cat) => {
+        
+        const newMatch = {
+            id: uuidv4(),
+            result: "win",
+            time: new Date().toLocaleString().slice(0, 10)
+        }
+        cat["matches"].push(newMatch)
+        const catRef = collection(db, "cats")
+        await setDoc(doc(catRef, cat.id.toString()), cat)
+    }
+
+    const addLostMatch = async (cat) => {
+        if(!cat.matches) {
+            return
+        }
+        const newMatch = {
+            id: uuidv4(),
+            result: "loss",
+            time: new Date().toLocaleString().slice(0, 10)
+        }
+        cat.matches.push(newMatch)
+        const catRef = collection(db, "cats")
+        await setDoc(doc(catRef, cat.id.toString()), cat)
+    }
+
     const handleAddWin = async () => {
         cat.PVPwins += 1
+        await addWonMatch(cat)
         await calculateWinrate()
     }
 
@@ -24,6 +54,7 @@ const CatCard = ({ cat, updateCat, fetchCats }) => {
 
     const handleAddLoss = async () => {
         cat.PVPlosses += 1
+        await addLostMatch(cat)
         await calculateWinrate()
     }
 
