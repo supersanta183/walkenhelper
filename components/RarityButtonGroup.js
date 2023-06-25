@@ -4,7 +4,7 @@ import { rarities } from './Constants'
 const RarityButtonGroup = ({ setRarity, rarity, description }) => {
 
     return (
-        <div className="form-control ml-2">
+        <div className="form-control px-2">
             <label className="label">
                 <span className="label-text">{description}</span>
             </label>

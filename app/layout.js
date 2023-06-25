@@ -3,9 +3,9 @@ import Navbar from '../components/Navbar'
 
 export default function Layout({ children }) {
   return (
-    <html>
+    <html className='bg-background bg-cover bg-fixed'>
       <body>
-        <div className='h-screen max-w-screen flex flex-col bg-background bg-cover bg-repeat-y'>
+        <div className='h-screen max-w-screen flex flex-col'>
           <div className=''>
             <Navbar />
           </div>
