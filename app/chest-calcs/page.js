@@ -47,7 +47,7 @@ const page = () => {
 
     return (
         <div className='h-full max-w-screen'>
-            <div className='card flex items-center justify-center pb-32 flex-grow px-2 h-full'>
+            <div className='card flex items-center justify-center flex-grow px-2'>
                 <div className='card-actions mt-5 bg-base-200 bg-opacity-80 rounded-2xl flex flex-col justify-center card-bordered shadow-xl'>
                     <div className='flex'>
                         <div>
