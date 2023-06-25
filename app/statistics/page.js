@@ -3,7 +3,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import fetchCats from '@/components/FetchCats'
 import CatTable from './CatTable'
-import BarChart from './BarChart'
+import BarChartRepresentation from './BarChartRepresentation'
 import fetchMatches from '@/components/FetchMatches'
 
 const page = () => {
@@ -29,6 +29,7 @@ const page = () => {
     <div className=''>
       {/* grafer i toppen */}
       <div>
+        <BarChartRepresentation matches={matches} />
       </div>
       <div className=' h-96'>
       </div>

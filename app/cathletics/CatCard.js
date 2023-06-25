@@ -20,10 +20,15 @@ const CatCard = ({ cat, updateCat, fetchCats }) => {
 
     const addWonMatch = async () => {
         let matches = await fetchMatches()
+        let dateobj = new Date()
+        let month = dateobj.getMonth() + 1
+        let day = dateobj.getDate()
+        let year = dateobj.getFullYear()
+        const newdate = day + "/" + month + "/" + year
         const newMatch = {
             id: uuidv4(),
             result: "win",
-            time: new Date().toLocaleString(),
+            time: newdate,
         }
         matches.push(newMatch)
         await handleAddMatch(matches)
@@ -31,10 +36,15 @@ const CatCard = ({ cat, updateCat, fetchCats }) => {
 
     const addLostMatch = async () => {
         let matches = await fetchMatches()
+        let dateobj = new Date()
+        let month = dateobj.getMonth() + 1
+        let day = dateobj.getDate()
+        let year = dateobj.getFullYear()
+        const newdate = day + "/" + month + "/" + year
         const newMatch = {
             id: uuidv4(),
             result: "loss",
-            time: new Date().toLocaleString(),
+            time: newdate,
         }
         matches.push(newMatch)
         await handleAddMatch(matches)
