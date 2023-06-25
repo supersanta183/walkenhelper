@@ -44,7 +44,6 @@ const page = () => {
             name: newCatName,
             level: newCatLevel,
             rarity: newCatRarity,
-            matches: [],
             PVPwins: 0,
             PVPlosses: 0,
             winrate: 0,

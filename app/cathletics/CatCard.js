@@ -1,7 +1,10 @@
+'use client'
 import React from 'react'
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '@/firebase/firebaseApp'
-import { setDoc, doc, collection } from 'firebase/firestore'
+import { updateDoc, doc, collection, setDoc } from 'firebase/firestore'
+import fetchMatches, { handleAddMatch } from '@/components/FetchMatches';
 
 const CatCard = ({ cat, updateCat, fetchCats }) => {
 
@@ -15,30 +18,26 @@ const CatCard = ({ cat, updateCat, fetchCats }) => {
         fetchCats()
     }
 
-    const addWonMatch = async (cat) => {
-        
+    const addWonMatch = async () => {
+        let matches = await fetchMatches()
         const newMatch = {
             id: uuidv4(),
             result: "win",
-            time: new Date().toLocaleString().slice(0, 10)
+            time: new Date().toLocaleString(),
         }
-        cat["matches"].push(newMatch)
-        const catRef = collection(db, "cats")
-        await setDoc(doc(catRef, cat.id.toString()), cat)
+        matches.push(newMatch)
+        await handleAddMatch(matches)
     }
 
-    const addLostMatch = async (cat) => {
-        if(!cat.matches) {
-            return
-        }
+    const addLostMatch = async () => {
+        let matches = await fetchMatches()
         const newMatch = {
             id: uuidv4(),
             result: "loss",
-            time: new Date().toLocaleString().slice(0, 10)
+            time: new Date().toLocaleString(),
         }
-        cat.matches.push(newMatch)
-        const catRef = collection(db, "cats")
-        await setDoc(doc(catRef, cat.id.toString()), cat)
+        matches.push(newMatch)
+        await handleAddMatch(matches)
     }
 
     const handleAddWin = async () => {
@@ -48,6 +47,9 @@ const CatCard = ({ cat, updateCat, fetchCats }) => {
     }
 
     const handleRemoveWin = async () => {
+        let matches = await fetchMatches()
+        matches.pop()
+        await handleAddMatch(matches)
         cat.PVPwins -= 1
         await calculateWinrate()
     }
@@ -59,6 +61,9 @@ const CatCard = ({ cat, updateCat, fetchCats }) => {
     }
 
     const handleRemoveLoss = async () => {
+        let matches = await fetchMatches()
+        matches.pop()
+        await handleAddMatch(matches)
         cat.PVPlosses -= 1
         await calculateWinrate()
     }

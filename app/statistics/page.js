@@ -3,27 +3,32 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import fetchCats from '@/components/FetchCats'
 import CatTable from './CatTable'
+import BarChart from './BarChart'
+import fetchMatches from '@/components/FetchMatches'
 
 const page = () => {
   const [cats, setCats] = useState(null)
+  const [matches, setMatches] = useState(null)
 
   useEffect(() => {
-    getCats()
+    fetchItems()
   }, [])
 
-  const getCats = async () => {
+  const fetchItems = async () => {
     const fetchedCats = await fetchCats().then((data) => {
       setCats(data)
     })
+    const fetchedMatches = await fetchMatches().then((data) => {
+      setMatches(data)
+    })
   }
 
-  if (!cats) return <div>loading...</div>
+  if (!cats || !matches) return <div>loading...</div>
 
   return (
     <div className=''>
       {/* grafer i toppen */}
       <div>
-        {cats[0].matches[1].time ? cats[0].matches[1].time : 'no time'}
       </div>
       <div className=' h-96'>
       </div>
