@@ -14,26 +14,29 @@ const page = () => {
     const [newCatLevel, setNewCatLevel] = useState(null)
     const [newCatRarity, setNewCatRarity] = useState(null)
 
+    useEffect(() => {
+        getCats()
+    }, [])
+
+    //fetches cats from database
     const getCats = async () => {
         const fetchedCats = await fetchCats().then((data) => {
             setCats(data)
         })
     }
 
-    const resetCat = () => {
+    //resets the new cat fields
+    const resetNewCat = () => {
         setNewCatName(null)
         setNewCatLevel(null)
         setNewCatRarity(null)
     }
 
-    useEffect(() => {
-        getCats()
-    }, [])
-
+    //creates a new cat object and adds it to the database
     const addCat = async () => {
         if(!newCatName || !newCatLevel || !newCatRarity) {
             alert('Please fill out all fields')
-            resetCat()
+            resetNewCat()
             return
         }
         const newCat = {
@@ -47,9 +50,10 @@ const page = () => {
         }
         updateCat(newCat)
         getCats()
-        resetCat()
+        resetNewCat()
     }
 
+    //updates cat in database
     const updateCat = async (cat) => {
         const catRef = collection(db, "cats")
         await setDoc(doc(catRef, cat.id.toString()), cat)
@@ -58,9 +62,9 @@ const page = () => {
     if (!cats) return <div>Loading...</div>
     return (
 
-        <div className='flex flex-col pb-5'>
+        <div className='pl-0 flex flex-col pb-5 max-w-screen'>
 
-            {/* Modal 5 */}
+            {/* Modal that pops up when "add cathletic" is clicked */}
             <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
                 <form method="dialog" className="modal-box">
                     <h2 className="font-bold text-lg text-center mb-2">Add a new cathletic:</h2>
@@ -77,7 +81,7 @@ const page = () => {
 
 
             <div className=' mr-2 lg:ml-5 flex justify-end lg:justify-start'>
-                <button className="btn btn-xl sm:btn-sm md:btn-md lg:btn-lg flex text-center mt-4" onClick={() => window.my_modal_5.showModal()}>Add cathletic
+                <button className="btn btn-xl sm:btn-sm md:btn-md lg:btn-lg flex text-center mt-4 bg-opacity-80" onClick={() => window.my_modal_5.showModal()}>Add cathletic
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>

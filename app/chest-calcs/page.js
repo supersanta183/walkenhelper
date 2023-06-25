@@ -47,8 +47,8 @@ const page = () => {
 
     return (
         <div className='h-full'>
-            <div className='card flex items-center justify-center pb-32 flex-grow px-2 h-full bg-base-200'>
-                <div className='card-actions flex flex-col justify-center px-10 py-10 card-bordered shadow-xl'>
+            <div className='card flex items-center justify-center pb-32 flex-grow px-2 h-full'>
+                <div className='card-actions bg-base-200 bg-opacity-80 rounded-2xl flex flex-col justify-center px-10 py-10 card-bordered shadow-xl'>
                     <div className='flex'>
                         <div>
                             <h2 className='text-center font-semibold'>Team members</h2>
@@ -115,7 +115,7 @@ const page = () => {
                     <button className='btn btn-primary w-full' onClick={calculateDroprate}>Calculate droprate</button>
                 </div>
                 <div className='flex items-end justify-center shadow mt-2'>
-                    <div className='flex stats w-full justify-center bg-base-200 stats-vertical lg:h-24'>
+                    <div className='flex stats w-full justify-center bg-base-200 bg-opacity-80 stats-vertical lg:h-24'>
                         {droprate.map((item, index) => {
                             return (
                                 <div className='px-2 stat' key={index}>

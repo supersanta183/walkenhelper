@@ -5,7 +5,7 @@ export default function Layout({ children }) {
   return (
     <html>
       <body>
-        <div className='h-screen w-screen flex flex-col'>
+        <div className='h-screen max-w-screen flex flex-col bg-background bg-cover bg-repeat-y'>
           <div className=''>
             <Navbar />
           </div>

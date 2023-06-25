@@ -1,5 +1,6 @@
 import React from 'react'
 
+// input-group used for adding a new cat to the database
 const CatStatButtonGroup = ({description, setField, value}) => {
     return (
         <div className="pb-1">
