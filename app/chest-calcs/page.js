@@ -112,9 +112,9 @@ const page = () => {
                             />
                         </div>
                     </div>
-                    <button className='btn btn-primary w-full' onClick={calculateDroprate}>Calculate droprate</button>
+                    <button className='btn btn-primary w-3/4 self-center' onClick={calculateDroprate}>Calculate droprate</button>
                 </div>
-                <div className='flex items-end justify-center shadow mt-2 w-full'>
+                <div className='flex items-end justify-center mt-2 w-full'>
                     <div className='flex stats justify-start bg-base-200 bg-opacity-80 stats-vertical lg:h-24 px-2  overflow-x-auto'>
                         {droprate.map((item, index) => {
                             return (
