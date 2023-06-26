@@ -1,19 +1,19 @@
 'use client'
 import React, { useEffect } from 'react'
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { useState } from 'react';
 
-const BarChartRepresentation = ({ matches, data }) => {
+const ProfitChart = ({ data }) => {
     return (
         <div className='flex'>
             <div className=' mt-5 card w-full'>
-                <div className='card-body flex lg:flex-col justify-center items-center'>
-                    <h2 className="card-title text-center">Matches</h2>
+                <div className='card-body flex flex-col justify-center items-center'>
+                    <h2 className="card-title text-center">Profit per day</h2>
                     <ResponsiveContainer width="100%" height={300}>
-                        <BarChart
+                        <LineChart
                             data={data}
                             margin={{
-                                top: 20,
+                                top: 5,
                                 right: 30,
                                 left: 20,
                                 bottom: 5,
@@ -24,9 +24,8 @@ const BarChartRepresentation = ({ matches, data }) => {
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="win" stackId="a" fill="#82ca9d" />
-                            <Bar dataKey="loss" stackId="a" fill="#F47174" />
-                        </BarChart>
+                            <Line type="monotone" dataKey="profit" stroke="#8884d8" activeDot={{ r: 8 }} />
+                        </LineChart>
                     </ResponsiveContainer>
                 </div>
             </div>
@@ -34,4 +33,4 @@ const BarChartRepresentation = ({ matches, data }) => {
     )
 }
 
-export default BarChartRepresentation
+export default ProfitChart

@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 const Navbar = () => {
   return (
-    <div className="navbar flex justify-end lg:justify-start bg-base-200 m-0 p-0 bg-opacity-70">
+    <div className="navbar flex justify-end lg:justify-start bg-base-100 m-0 p-0 bg-opacity-80">
       {/* navbar = dropdown on small screen */}
       <div className='dropdown'>
         <label tabIndex={0} className='btn btn-ghost lg:hidden'>
