@@ -41,8 +41,8 @@ const page = () => {
       matches.forEach(match => {
         if (match.time === date) {
           if (match.result === 'win') {
-            totalProfit += 25
-            profit += 25
+            totalProfit += 25 - battlePrice
+            profit += 25 - battlePrice
             wins += 1
           } else if (match.result === 'loss') {
             totalProfit -= battlePrice
