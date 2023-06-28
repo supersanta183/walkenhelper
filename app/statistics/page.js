@@ -6,6 +6,7 @@ import CatTable from './CatTable'
 import ProfitChart from './ProfitChart'
 import BarChartRepresentation from './BarChartRepresentation'
 import fetchMatches from '@/components/FetchMatches'
+import fetchUser from '@/components/FetchUser'
 
 const page = () => {
   const [cats, setCats] = useState(null)
@@ -14,6 +15,8 @@ const page = () => {
   const [barchartData, setBarchartData] = useState([])
   const [profitData, setProfitData] = useState([])
   const [totalProfit, setTotalProfit] = useState(0)
+  const [user, setUser] = useState('')
+  const [fetchedUser, setFetchedUser] = useState(null)
   const battlePrice = 17
 
   useEffect(() => {
@@ -27,8 +30,27 @@ const page = () => {
   }, [dates, matches])
 
   useEffect(() => {
-    fetchItems()
+    setFetchedUser(fetchUser(user))
+  }, [user])
+
+  useEffect(() => {
+    if (!fetchedUser) return
+    setCats(fetchedUser.cats)
+    setMatches(fetchedUser.matches)
+  }, [fetchedUser])
+
+  useEffect(() => {
+    getUser()
   }, [])
+
+  const getUser = async () => {
+    let tempUser = localStorage.getItem('user')
+    if (tempUser) {
+      const x = await fetchUser(tempUser).then((data) => {
+        setFetchedUser(data)
+      })
+    }
+  }
 
   const createData = () => {
     const tempData = []
@@ -60,15 +82,6 @@ const page = () => {
     setTotalProfit(totalProfit)
     setProfitData(tempProfitData)
     setBarchartData(tempData)
-  }
-
-  const fetchItems = async () => {
-    const fetchedCats = await fetchCats().then((data) => {
-      setCats(data)
-    })
-    const fetchedMatches = await fetchMatches().then((data) => {
-      setMatches(data)
-    })
   }
 
   if (!cats || !matches) return <div>loading...</div>

@@ -6,20 +6,30 @@ import { db } from '@/firebase/firebaseApp'
 import { updateDoc, doc, collection, setDoc } from 'firebase/firestore'
 import fetchMatches, { handleAddMatch } from '@/components/FetchMatches';
 
-const CatCard = ({ cat, updateCat, fetchCats }) => {
+const CatCard = ({ cat, updateUser, fetchUser, user }) => {
 
     const calculateWinrate = async () => {
+        if(!user) return
         if(cat.PVPwins > 0 || cat.PVPlosses > 0) {
             cat.winrate = Math.round((cat.PVPwins / (cat.PVPwins + cat.PVPlosses)) * 100)
         } else {
             cat.winrate = 0
         }
-        await updateCat(cat)
-        fetchCats()
+        let newUser = user
+        newUser.cats.map((c) => {
+            if(c.id === cat.id) {
+                c.winrate = cat.winrate
+            }
+        })
+
+        await updateUser(newUser)
+        fetchUser()
     }
 
     const addWonMatch = async () => {
-        let matches = await fetchMatches()
+        console.log(user)
+        if(!user) return
+        let newUser = user
         let dateobj = new Date()
         let month = dateobj.getMonth() + 1
         let day = dateobj.getDate()
@@ -30,12 +40,15 @@ const CatCard = ({ cat, updateCat, fetchCats }) => {
             result: "win",
             time: newdate,
         }
-        matches.push(newMatch)
-        await handleAddMatch(matches)
+        console.log(newUser)
+        newUser.matches.push(newMatch)
+        await updateUser(newUser)
+        fetchUser()
     }
 
     const addLostMatch = async () => {
-        let matches = await fetchMatches()
+        if(!user) return
+        let newUser = user
         let dateobj = new Date()
         let month = dateobj.getMonth() + 1
         let day = dateobj.getDate()
@@ -46,13 +59,13 @@ const CatCard = ({ cat, updateCat, fetchCats }) => {
             result: "loss",
             time: newdate,
         }
-        matches.push(newMatch)
-        await handleAddMatch(matches)
+        newUser.matches.push(newMatch)
+        await updateUser(newUser)
     }
 
     const handleAddWin = async () => {
         cat.PVPwins += 1
-        await addWonMatch(cat)
+        await addWonMatch()
         await calculateWinrate()
     }
 
