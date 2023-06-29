@@ -1,10 +1,8 @@
 "use client"
-import React, { use, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import CatCard from './CatCard'
-import { useState } from 'react'
 import { db } from '@/firebase/firebaseApp'
 import { setDoc, doc, collection, query, where, getDocs } from 'firebase/firestore'
-import fetchCats from '@/components/FetchCats'
 import CatStatButtonGroup from './CatStatButtonGroup'
 import { v4 as uuidv4 } from 'uuid';
 
@@ -72,12 +70,6 @@ const CathleticsPage = () => {
         resetNewCat()
     }
 
-    //updates cat in database
-    const updateCat = async (cat) => {
-        const catRef = collection(db, "cats")
-        await setDoc(doc(catRef, cat.id.toString()), cat)
-    }
-
     const handleUserSelection = (value) => {
         localStorage.setItem('user', value)
         setUser(value)
@@ -125,7 +117,8 @@ const CathleticsPage = () => {
                             <ul tabIndex={0} className="p-2 z-10 shadow menu dropdown-content bg-base-100 rounded-box w-52">
                                 <li onClick={() => handleUserSelection('Emil')}><a>Emil </a></li>
                                 <li onClick={() => handleUserSelection('Bjarke')}><a>Bjarke</a></li>
-                            </ul>}
+                            </ul>
+                        }
                     </div>
                 </div>
             </div>
