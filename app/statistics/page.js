@@ -1,11 +1,9 @@
 'use client'
 import React from 'react'
 import { useState, useEffect } from 'react'
-import fetchCats from '@/components/FetchCats'
 import CatTable from './CatTable'
 import ProfitChart from './ProfitChart'
 import BarChartRepresentation from './BarChartRepresentation'
-import fetchMatches from '@/components/FetchMatches'
 import fetchUser from '@/components/FetchUser'
 import TotalProfitBar from './TotalProfitBar'
 
@@ -16,7 +14,6 @@ const page = () => {
   const [barchartData, setBarchartData] = useState([])
   const [profitData, setProfitData] = useState([])
   const [totalProfit, setTotalProfit] = useState(0)
-  const [user, setUser] = useState('')
   const [fetchedUser, setFetchedUser] = useState(null)
   const [berryPack, setBerryPack] = useState(5000)
   const [berryPrice, setBerryPrice] = useState(0.084998)
@@ -32,7 +29,6 @@ const page = () => {
   }, [matches])
 
   useEffect(() => {
-    console.log("heeej")
     createData()
   }, [dates, matches, berryPrice])
 
@@ -40,9 +36,6 @@ const page = () => {
     setPrices()
   }, [berryPack])
 
-  useEffect(() => {
-    setFetchedUser(fetchUser(user))
-  }, [user])
 
   useEffect(() => {
     if (!fetchedUser) return
@@ -55,7 +48,6 @@ const page = () => {
   }, [])
 
   const setPrices = () => {
-    console.log("yo")
     switch(berryPack) {
       case '10':
         setBerryPrice(0.1)

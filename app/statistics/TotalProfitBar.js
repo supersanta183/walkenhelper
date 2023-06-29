@@ -4,10 +4,6 @@ import { useState } from 'react'
 
 const TotalProfitBar = ({ totalProfit, berryPack, setBerryPack }) => {
 
-  useEffect(() => {
-    console.log(berryPack)
-  }, [berryPack])
-
   const handleBerryPack = (e) => {
     setBerryPack(e.currentTarget.dataset.value)
   }
