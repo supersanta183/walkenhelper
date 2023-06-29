@@ -1,5 +1,3 @@
-import React from 'react'
-import { useState } from 'react'
 import { db } from '@/firebase/firebaseApp'
 import { collection, getDocs } from 'firebase/firestore'
 

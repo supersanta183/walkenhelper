@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react'
+
 import RarityButtonGroup from '@/components/RarityButtonGroup'
 import { TeamLeaderRarityRate, TeamMemberRarityRate, TeamLeaderClothesRarityRate } from '@/components/Constants'
 

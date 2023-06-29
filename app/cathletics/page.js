@@ -1,12 +1,14 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import CatCard from './CatCard'
 import { db } from '@/firebase/firebaseApp'
 import { collection, query, where, getDocs } from 'firebase/firestore'
-import CatStatButtonGroup from './CatStatButtonGroup'
 import { v4 as uuidv4 } from 'uuid';
+
 import { updateUser } from '@/components/FetchUser';
 import UserDropdown from '@/components/userDropdown'
+import CatCard from './CatCard'
+import CatStatButtonGroup from './CatStatButtonGroup'
+
 
 const CathleticsPage = () => {
     const [newCatName, setNewCatName] = useState(null)

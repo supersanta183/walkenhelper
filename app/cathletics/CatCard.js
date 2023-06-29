@@ -1,7 +1,6 @@
 'use client'
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid';
-import fetchMatches, { handleAddMatch } from '@/components/FetchMatches';
 
 const CatCard = ({ cat, updateUser, fetchUser, user }) => {
 
