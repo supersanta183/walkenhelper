@@ -17,7 +17,8 @@ const page = () => {
   const [totalProfit, setTotalProfit] = useState(0)
   const [user, setUser] = useState('')
   const [fetchedUser, setFetchedUser] = useState(null)
-  const battlePrice = 17
+  const battlePrice = 12
+  const battleReward = 15
 
   useEffect(() => {
     if (!matches) return
@@ -63,8 +64,8 @@ const page = () => {
       matches.forEach(match => {
         if (match.time === date) {
           if (match.result === 'win') {
-            totalProfit += 25 - battlePrice
-            profit += 25 - battlePrice
+            totalProfit += battleReward - battlePrice
+            profit += battleReward - battlePrice
             wins += 1
           } else if (match.result === 'loss') {
             totalProfit -= battlePrice
