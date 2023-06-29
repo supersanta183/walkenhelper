@@ -1,23 +1,20 @@
 'use client'
 import React from 'react'
-import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { db } from '@/firebase/firebaseApp'
-import { updateDoc, doc, collection, setDoc } from 'firebase/firestore'
 import fetchMatches, { handleAddMatch } from '@/components/FetchMatches';
 
 const CatCard = ({ cat, updateUser, fetchUser, user }) => {
 
     const calculateWinrate = async () => {
-        if(!user) return
-        if(cat.PVPwins > 0 || cat.PVPlosses > 0) {
+        if (!user || !cat) return
+        if (cat.PVPwins > 0 || cat.PVPlosses > 0) {
             cat.winrate = Math.round((cat.PVPwins / (cat.PVPwins + cat.PVPlosses)) * 100)
         } else {
             cat.winrate = 0
         }
         let newUser = user
         newUser.cats.map((c) => {
-            if(c.id === cat.id) {
+            if (c.id === cat.id) {
                 c.winrate = cat.winrate
             }
         })
@@ -26,9 +23,10 @@ const CatCard = ({ cat, updateUser, fetchUser, user }) => {
         fetchUser()
     }
 
-    const addWonMatch = async () => {
-        console.log(user)
-        if(!user) return
+    const handleAddMatch = async (result) => {
+        if (!user) return
+
+        //create a new match
         let newUser = user
         let dateobj = new Date()
         let month = dateobj.getMonth() + 1
@@ -37,57 +35,39 @@ const CatCard = ({ cat, updateUser, fetchUser, user }) => {
         const newdate = day + "/" + month + "/" + year
         const newMatch = {
             id: uuidv4(),
-            result: "win",
+            result: "",
             time: newdate,
         }
-        console.log(newUser)
-        newUser.matches.push(newMatch)
-        await updateUser(newUser)
-        fetchUser()
-    }
 
-    const addLostMatch = async () => {
-        if(!user) return
-        let newUser = user
-        let dateobj = new Date()
-        let month = dateobj.getMonth() + 1
-        let day = dateobj.getDate()
-        let year = dateobj.getFullYear()
-        const newdate = day + "/" + month + "/" + year
-        const newMatch = {
-            id: uuidv4(),
-            result: "loss",
-            time: newdate,
+        switch (result) {
+            case 'win':
+                cat.PVPwins += 1
+                newMatch.result = 'win'
+                break;
+
+            case 'loss':
+                cat.PVPlosses += 1
+                newMatch.result = 'loss'
+                break;
         }
+
+        //update users matches and update user in database
         newUser.matches.push(newMatch)
         await updateUser(newUser)
-    }
-
-    const handleAddWin = async () => {
-        cat.PVPwins += 1
-        await addWonMatch()
-        await calculateWinrate()
+        calculateWinrate()
     }
 
     const handleRemoveWin = async () => {
-        let matches = await fetchMatches()
-        matches.pop()
-        await handleAddMatch(matches)
+        user.matches.pop()
         cat.PVPwins -= 1
-        await calculateWinrate()
-    }
-
-    const handleAddLoss = async () => {
-        cat.PVPlosses += 1
-        await addLostMatch(cat)
+        await updateUser(user)
         await calculateWinrate()
     }
 
     const handleRemoveLoss = async () => {
-        let matches = await fetchMatches()
-        matches.pop()
-        await handleAddMatch(matches)
+        user.matches.pop()
         cat.PVPlosses -= 1
+        await updateUser(user)
         await calculateWinrate()
     }
 
@@ -122,12 +102,20 @@ const CatCard = ({ cat, updateUser, fetchUser, user }) => {
                 </div>
                 <div className='flex justify-end'>
                     <div className="card-actions">
-                        <button className="btn btn-primary w-full" onClick={handleAddWin}>Add win</button>
-                        <button className="btn btn-primary w-full" onClick={handleRemoveWin}>Remove win</button>
+                        <button
+                            className="btn btn-primary w-full"
+                            onClick={() => handleAddMatch('win')}>
+                            Add win
+                        </button>
+                        <button
+                            className="btn btn-primary w-full"
+                            onClick={handleRemoveWin}>
+                            Remove win
+                        </button>
                     </div>
                     <div className="divider divider-horizontal"></div>
                     <div className="card-actions">
-                        <button className="btn btn-primary w-full" onClick={handleAddLoss}>add loss</button>
+                        <button className="btn btn-primary w-full" onClick={() => handleAddMatch('loss')}>add loss</button>
                         <button className="btn btn-primary w-full" onClick={handleRemoveLoss}>Remove loss</button>
                     </div>
                 </div>

@@ -5,6 +5,7 @@ import { db } from '@/firebase/firebaseApp'
 import { setDoc, doc, collection, query, where, getDocs } from 'firebase/firestore'
 import CatStatButtonGroup from './CatStatButtonGroup'
 import { v4 as uuidv4 } from 'uuid';
+import { updateUser } from '@/components/FetchUser';
 
 const CathleticsPage = () => {
     const [newCatName, setNewCatName] = useState(null)
@@ -26,11 +27,6 @@ const CathleticsPage = () => {
         getUser()
         setIsOpen(false)
     }, [user])
-
-    const updateUser = async (user) => {
-        const userRef = collection(db, "users")
-        await setDoc(doc(userRef, user.id.toString()), user)
-      }
 
     const getUser = async () => {
         if(!user) return
