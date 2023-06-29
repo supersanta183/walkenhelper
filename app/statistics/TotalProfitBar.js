@@ -1,10 +1,10 @@
 'use client'
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React from 'react'
 
 const TotalProfitBar = ({ totalProfit, berryPack, setBerryPack }) => {
 
   const handleBerryPack = (e) => {
+    localStorage.setItem("berrypack", e.currentTarget.dataset.value)
     setBerryPack(e.currentTarget.dataset.value)
   }
 
@@ -13,7 +13,7 @@ const TotalProfitBar = ({ totalProfit, berryPack, setBerryPack }) => {
     <div className='totalprofit flex items-center justify-center'>
         <h1 className=' font-bold text-xl'>Total profit: {totalProfit}&nbsp;</h1>
         <img src="images/WLKN.png" className='object-scale-down h-6' />
-        <h2 className='font-bold'>&nbsp;WLKN</h2>
+        <h2 className='font-bold'>&nbsp;$WLKN</h2>
       </div>
       <div className='mysberry-prices'>
         <div className='card w-full'>

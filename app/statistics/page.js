@@ -44,6 +44,10 @@ const page = () => {
   }, [fetchedUser])
 
   useEffect(() => {
+    const tempBerryPack = localStorage.getItem("berrypack")
+    if(tempBerryPack) {
+      setBerryPack(tempBerryPack)
+    }
     getUser()
   }, [])
 
