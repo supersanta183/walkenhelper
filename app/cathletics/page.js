@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from 'react'
 import CatCard from './CatCard'
 import { db } from '@/firebase/firebaseApp'
-import { setDoc, doc, collection, query, where, getDocs } from 'firebase/firestore'
+import { collection, query, where, getDocs } from 'firebase/firestore'
 import CatStatButtonGroup from './CatStatButtonGroup'
 import { v4 as uuidv4 } from 'uuid';
 import { updateUser } from '@/components/FetchUser';
+import UserDropdown from '@/components/userDropdown'
 
 const CathleticsPage = () => {
     const [newCatName, setNewCatName] = useState(null)
@@ -29,7 +30,7 @@ const CathleticsPage = () => {
     }, [user])
 
     const getUser = async () => {
-        if(!user) return
+        if (!user) return
         const userRef = query(collection(db, "users"), where("name", "==", user))
         await getDocs(userRef).then((result) => {
             setFetchedUser(result.docs[0].data())
@@ -86,7 +87,7 @@ const CathleticsPage = () => {
 
                     <div className="modal-action">
                         {/* if there is a button in form, it will close the modal */}
-                        <button className="btn" onClick={addCat}>Close</button>
+                        <button className="btn" onClick={addCat}>Add cathletic</button>
                     </div>
                 </form>
             </dialog>
@@ -101,21 +102,12 @@ const CathleticsPage = () => {
                     </button>
                 </div>
                 <div className='navbar-end'>
-                    <div className='dropdown dropdown-end' onClick={() => setIsOpen(true)}>
-                        <label tabIndex={0} className="btn btn-xl sm:btn-sm md:btn-md lg:btn-lg flex text-center mt-4 bg-opacity-80">
-                            {user || 'select User'}
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                            </svg>
-                        </label>
-                        {
-                            isOpen &&
-                            <ul tabIndex={0} className="p-2 z-10 shadow menu dropdown-content bg-base-100 rounded-box w-52">
-                                <li onClick={() => handleUserSelection('Emil')}><a>Emil </a></li>
-                                <li onClick={() => handleUserSelection('Bjarke')}><a>Bjarke</a></li>
-                            </ul>
-                        }
-                    </div>
+                    <UserDropdown
+                        handleUserSelection={handleUserSelection}
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        user={user}
+                    />
                 </div>
             </div>
             <div className='flex flex-col lg:flex-row h-full'>
