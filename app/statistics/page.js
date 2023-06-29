@@ -110,7 +110,7 @@ const page = () => {
         }
       })
       tempData.push({ date: date, win: wins, loss: losses })
-      tempProfitData.push({ date: date, profit: profit })
+      tempProfitData.push({ date: date, profit: profit.toFixed(0) })
       profit = 0
       wins = 0
       losses = 0
