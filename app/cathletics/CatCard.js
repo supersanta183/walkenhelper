@@ -56,6 +56,42 @@ const CatCard = ({ cat, updateUser, fetchUser, user }) => {
         calculateWinrate()
     }
 
+    const handleRemoveMatch = async (result) => {
+        let matches = user.matches
+        console.log(matches)
+        if (matches.length === 1 && matches[0].result === result) {
+            user.matches = []
+            decrementWinLoss(result)
+            await updateUser(user)
+            await calculateWinrate()
+            return
+        } else if (matches.length === 1 && matches[0].result !== result) {
+            return
+        }
+        for (let i = matches.length - 1; i >= 0; i--) {
+            console.log(matches[i])
+            if (matches[i].result === result) {
+                matches.splice(i, i)
+                user.matches = matches
+                decrementWinLoss(result)
+                await updateUser(user)
+                await calculateWinrate()
+                return
+            }
+        }
+    }
+
+    const decrementWinLoss = (result) => {
+        switch(result) {
+            case 'win':
+                cat.PVPwins -= 1
+                break;
+            case 'loss':
+                cat.PVPlosses -= 1
+                break; 
+        }
+    }
+
     const handleRemoveWin = async () => {
         user.matches.pop()
         cat.PVPwins -= 1
@@ -106,16 +142,26 @@ const CatCard = ({ cat, updateUser, fetchUser, user }) => {
                             onClick={() => handleAddMatch('win')}>
                             Add win
                         </button>
+
                         <button
                             className="btn btn-primary w-full"
-                            onClick={handleRemoveWin}>
+                            onClick={() => handleRemoveMatch('win')}>
                             Remove win
                         </button>
                     </div>
                     <div className="divider divider-horizontal"></div>
                     <div className="card-actions">
-                        <button className="btn btn-primary w-full" onClick={() => handleAddMatch('loss')}>add loss</button>
-                        <button className="btn btn-primary w-full" onClick={handleRemoveLoss}>Remove loss</button>
+                        <button
+                            className="btn btn-primary w-full"
+                            onClick={() => handleAddMatch('loss')}>
+                            add loss
+                        </button>
+
+                        <button
+                            className="btn btn-primary w-full"
+                            onClick={() => handleRemoveMatch('loss')}>
+                            Remove loss
+                        </button>
                     </div>
                 </div>
             </div>
