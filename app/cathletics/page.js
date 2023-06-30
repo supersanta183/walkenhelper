@@ -5,7 +5,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid';
 
 import { updateUser } from '@/components/FetchUser';
-import UserDropdown from '@/components/userDropdown'
+import UserDropdown from '@/components/UserDropdown';
 import CatCard from './CatCard'
 import CatStatButtonGroup from './CatStatButtonGroup'
 
