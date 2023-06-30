@@ -54,28 +54,40 @@ const CatCard = ({ cat, updateUser, fetchUser, user }) => {
         newUser.matches.push(newMatch)
         await updateUser(newUser)
         calculateWinrate()
+        fetchUser()
     }
 
     const handleRemoveMatch = async (result) => {
+        if(result === 'win' && cat.PVPwins === 0) {
+            return
+        }
+        if(result === 'loss' && cat.PVPlosses === 0) {
+            return
+        }
+
         let matches = user.matches
-        console.log(matches)
         if (matches.length === 1 && matches[0].result === result) {
             user.matches = []
             decrementWinLoss(result)
             await updateUser(user)
             await calculateWinrate()
+            fetchUser()
             return
         } else if (matches.length === 1 && matches[0].result !== result) {
             return
         }
         for (let i = matches.length - 1; i >= 0; i--) {
-            console.log(matches[i])
             if (matches[i].result === result) {
-                matches.splice(i, i)
+                if(i === 0) {
+                    matches.shift()
+                } else {
+                    matches.splice(i, i)
+                }
                 user.matches = matches
                 decrementWinLoss(result)
                 await updateUser(user)
                 await calculateWinrate()
+                fetchUser()
                 return
             }
         }
@@ -91,21 +103,6 @@ const CatCard = ({ cat, updateUser, fetchUser, user }) => {
                 break; 
         }
     }
-
-    const handleRemoveWin = async () => {
-        user.matches.pop()
-        cat.PVPwins -= 1
-        await updateUser(user)
-        await calculateWinrate()
-    }
-
-    const handleRemoveLoss = async () => {
-        user.matches.pop()
-        cat.PVPlosses -= 1
-        await updateUser(user)
-        await calculateWinrate()
-    }
-
 
     return (
         <div className="card flex justify-center items-center lg:w-96 bg-base-100 bg-opacity-80 shadow-xl border-2 border-primary hover:border-primary-focus mt-5 lg:ml-5 ml-2 mr-2 text-center">

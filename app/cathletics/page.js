@@ -2,12 +2,11 @@
 import React, { useEffect, useState } from 'react'
 import { db } from '@/firebase/firebaseApp'
 import { collection, query, where, getDocs } from 'firebase/firestore'
-import { v4 as uuidv4 } from 'uuid';
 
 import { updateUser } from '@/components/FetchUser';
 import UserDropdown from '@/components/UserDropdown';
 import CatCard from './CatCard'
-import CatStatButtonGroup from './CatStatButtonGroup'
+import AddCat from './AddCat';
 
 
 const CathleticsPage = () => {
@@ -39,36 +38,6 @@ const CathleticsPage = () => {
         })
     }
 
-    //resets the new cat fields
-    const resetNewCat = () => {
-        setNewCatName(null)
-        setNewCatLevel(null)
-        setNewCatRarity(null)
-    }
-
-    //creates a new cat object and adds it to the database
-    const addCat = async () => {
-        if (!newCatName || !newCatLevel || !newCatRarity) {
-            alert('Please fill out all fields')
-            resetNewCat()
-            return
-        }
-        const newCat = {
-            id: uuidv4(),
-            name: newCatName,
-            level: newCatLevel,
-            rarity: newCatRarity,
-            PVPwins: 0,
-            PVPlosses: 0,
-            winrate: 0,
-        }
-
-        const newUser = fetchedUser
-        newUser.cats.push(newCat)
-        updateUser(newUser)
-        resetNewCat()
-    }
-
     const handleUserSelection = (value) => {
         localStorage.setItem('user', value)
         setUser(value)
@@ -79,20 +48,16 @@ const CathleticsPage = () => {
 
         <div className='pl-0 flex flex-col pb-5 max-w-screen'>
 
-            {/* Modal that pops up when "add cathletic" is clicked */}
-            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-                <form method="dialog" className="modal-box">
-                    <h2 className="font-bold text-lg text-center mb-2">Add a new cathletic:</h2>
-                    <CatStatButtonGroup description="Name" setField={setNewCatName} value={newCatName} />
-                    <CatStatButtonGroup description="Level" setField={setNewCatLevel} value={newCatLevel} />
-                    <CatStatButtonGroup description="Rarity" setField={setNewCatRarity} value={newCatRarity} />
-
-                    <div className="modal-action">
-                        {/* if there is a button in form, it will close the modal */}
-                        <button className="btn" onClick={addCat}>Add cathletic</button>
-                    </div>
-                </form>
-            </dialog>
+            <AddCat 
+                setNewCatName={setNewCatName}
+                newCatName={newCatName}
+                setNewCatLevel={setNewCatLevel}
+                newCatLevel={newCatLevel}
+                setNewCatRarity={setNewCatRarity}
+                newCatRarity={newCatRarity}
+                updateUser={updateUser}
+                fetchedUser={fetchedUser}
+            />
 
 
             <div className='navbar'>

@@ -3,4 +3,3 @@
 - opdater statistics så den tager højde for hvilken leagu der kæmpes i.
 - authentification
 - mulighed for at fjerne kat
-- fix remove win eller loss, saa den ikke bare fjerner den bagerste i listen
