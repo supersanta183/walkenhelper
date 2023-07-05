@@ -46,7 +46,7 @@ const CathleticsPage = () => {
     if (!fetchedUser) return <div>Loading...</div>
     return (
 
-        <div className='pl-0 flex flex-col pb-5 max-w-screen'>
+        <div className='pl-0 pb-5 max-w-screen bg-transparent flex flex-col h-full'>
 
             <AddCat 
                 setNewCatName={setNewCatName}
@@ -77,7 +77,7 @@ const CathleticsPage = () => {
                     />
                 </div>
             </div>
-            <div className='flex flex-col lg:flex-row h-full'>
+            <div className='flex flex-col lg:flex-row h-full flex-wrap'>
                 {fetchedUser.cats.map((cat) => (
                     <CatCard key={cat.id} cat={cat} updateUser={updateUser} user={fetchedUser} fetchUser={getUser} />
                 ))}

@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import { useState, useEffect } from 'react'
+
 import CatTable from './CatTable'
 import ProfitChart from './ProfitChart'
 import BarChartRepresentation from './BarChartRepresentation'
@@ -45,14 +46,14 @@ const page = () => {
 
   useEffect(() => {
     const tempBerryPack = localStorage.getItem("berrypack")
-    if(tempBerryPack) {
+    if (tempBerryPack) {
       setBerryPack(tempBerryPack)
     }
     getUser()
   }, [])
 
   const setPrices = () => {
-    switch(berryPack) {
+    switch (berryPack) {
       case '10':
         setBerryPrice(0.1)
         break;
@@ -102,13 +103,17 @@ const page = () => {
     dates.forEach(date => {
       matches.forEach(match => {
         if (match.time === date) {
+          let matchcost = parseInt(match.league.entranceFee)
+          let boostcost = parseInt(match.league.boostFee)
+          let reward = parseInt(match.league.reward)
           if (match.result === 'win') {
-            totalProfit += battleReward - battlePrice
-            profit += battleReward - battlePrice
+            console.log(matchcost, boostcost, reward)
+            totalProfit += reward - (matchcost + boostcost) * berryPrice
+            profit += reward - (matchcost + boostcost) * berryPrice
             wins += 1
           } else if (match.result === 'loss') {
-            totalProfit -= battlePrice
-            profit -= battlePrice
+            totalProfit -= (matchcost + boostcost) * berryPrice
+            profit -= (matchcost + boostcost) * berryPrice
             losses += 1
           }
         }
@@ -138,7 +143,7 @@ const page = () => {
         </div>
       </div>
       <div className=''>
-        <TotalProfitBar totalProfit={totalProfit} berryPack={berryPack} setBerryPack={setBerryPack}/>
+        <TotalProfitBar totalProfit={totalProfit} berryPack={berryPack} setBerryPack={setBerryPack} />
       </div>
       {/* tabell i bunden, met katte og deres winrate */}
       <div className='flex justify-center'>

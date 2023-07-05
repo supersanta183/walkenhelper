@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import RarityButtonGroup from '@/components/RarityButtonGroup'
 import { rarities } from '@/components/Constants'
+import { assignLeague } from '@/constants/AssignLeague';
 
 const AddCat = ({ setNewCatName, newCatName, setNewCatLevel, newCatLevel, setNewCatRarity, newCatRarity, updateUser, fetchedUser }) => {
 
@@ -28,6 +29,7 @@ const AddCat = ({ setNewCatName, newCatName, setNewCatLevel, newCatLevel, setNew
             PVPwins: 0,
             PVPlosses: 0,
             winrate: 0,
+            PVPLeague: assignLeague(newCatLevel, newCatRarity)
         }
 
         const newUser = fetchedUser
@@ -60,7 +62,7 @@ const AddCat = ({ setNewCatName, newCatName, setNewCatLevel, newCatLevel, setNew
                     <span>Rarity</span>
                     <select
                         className="select select-bordered w-full max-w-xs bg-base-200"
-                        value={newCatRarity}
+                        value={newCatRarity ? newCatRarity : ""}
                         onChange={(e) => setNewCatRarity(e.target.value)}
                     >
                         {rarities.map((rarity) => (

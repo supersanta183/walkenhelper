@@ -36,6 +36,7 @@ const CatCard = ({ cat, updateUser, fetchUser, user }) => {
             id: uuidv4(),
             result: "",
             time: newdate,
+            league: cat.PVPLeague
         }
 
         switch (result) {
@@ -105,7 +106,7 @@ const CatCard = ({ cat, updateUser, fetchUser, user }) => {
     }
 
     return (
-        <div className="card flex justify-center items-center lg:w-96 bg-base-100 bg-opacity-80 shadow-xl border-2 border-primary hover:border-primary-focus mt-5 lg:ml-5 ml-2 mr-2 text-center">
+        <div className="card flex justify-center items-center lg:w-96 bg-base-100 bg-opacity-80 shadow-xl border-2 border-primary hover:border-primary-focus mt-5 lg:ml-5 ml-2 mr-2 text-center h-72">
             <div className="card-body w-full">
                 <div className='flex items-center justify-center'>
                     <h2 className="card-title text-right">{cat.name} <div className="badge badge-accent">Level: {cat.level}</div></h2>
