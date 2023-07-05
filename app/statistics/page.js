@@ -19,10 +19,6 @@ const page = () => {
   const [berryPack, setBerryPack] = useState(5000)
   const [berryPrice, setBerryPrice] = useState(0.084998)
 
-  let berryAmount = 138
-  let battlePrice = berryAmount * berryPrice
-  let battleReward = 15
-
   useEffect(() => {
     if (!matches) return
     const uniqueDates = [...new Set(matches.map(match => match.time))];
@@ -107,7 +103,6 @@ const page = () => {
           let boostcost = parseInt(match.league.boostFee)
           let reward = parseInt(match.league.reward)
           if (match.result === 'win') {
-            console.log(matchcost, boostcost, reward)
             totalProfit += reward - (matchcost + boostcost) * berryPrice
             profit += reward - (matchcost + boostcost) * berryPrice
             wins += 1

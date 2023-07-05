@@ -11,7 +11,6 @@ const fetchUser = async (user) => {
 }
 
 const updateUser = async (user) => {
-    console.log(user)
     const userRef = collection(db, "users")
     await setDoc(doc(userRef, user.id.toString()), user)
 }
