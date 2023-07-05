@@ -124,7 +124,11 @@ const page = () => {
     setBarchartData(tempData)
   }
 
-  if (!cats || !matches) return <div>loading...</div>
+  if (!cats || !matches) return (
+    <div className='flex items-center justify-center h-full'>
+      <span className="loading loading-spinner loading-lg"></span>
+    </div>
+  )
 
   return (
     <div className='min-h-full bg-base-100 bg-opacity-80 bg-fixed bg-cover'>

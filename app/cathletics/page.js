@@ -43,12 +43,17 @@ const CathleticsPage = () => {
         setUser(value)
     }
 
-    if (!fetchedUser) return <div>Loading...</div>
+    if (!fetchedUser) return (
+        <div className='flex items-center justify-center h-full'>
+            <span className="loading loading-spinner loading-lg"></span>
+        </div>
+    )
+
     return (
 
         <div className='pl-0 pb-5 max-w-screen bg-transparent flex flex-col h-full'>
 
-            <AddCat 
+            <AddCat
                 setNewCatName={setNewCatName}
                 newCatName={newCatName}
                 setNewCatLevel={setNewCatLevel}
