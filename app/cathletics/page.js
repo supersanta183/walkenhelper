@@ -41,18 +41,18 @@ const CathleticsPage = () => {
 
     return (
 
-        <div className='pl-0 pb-5 max-w-screen bg-transparent flex flex-col h-full'>
+        <div className='pl-0 pb-5 max-w-screen flex flex-col h-full'>
 
-            <AddCat
-                setNewCatName={setNewCatName}
-                newCatName={newCatName}
-                setNewCatLevel={setNewCatLevel}
-                newCatLevel={newCatLevel}
-                setNewCatRarity={setNewCatRarity}
-                newCatRarity={newCatRarity}
-                updateUser={updateUser}
-                fetchedUser={fetchedUser}
-            />
+                <AddCat
+                    setNewCatName={setNewCatName}
+                    newCatName={newCatName}
+                    setNewCatLevel={setNewCatLevel}
+                    newCatLevel={newCatLevel}
+                    setNewCatRarity={setNewCatRarity}
+                    newCatRarity={newCatRarity}
+                    updateUser={updateUser}
+                    fetchedUser={fetchedUser}
+                />
 
             <div className='navbar p-0'>
                 <div className='navbar-start'>
@@ -69,7 +69,7 @@ const CathleticsPage = () => {
                     />
                 </div>
             </div>
-            <div className='flex flex-col lg:flex-row h-full flex-wrap'>
+            <div className='flex w-screen px-2 flex-col lg:flex-row h-full flex-wrap'>
                 {fetchedUser.cats.map((cat) => (
                     <CatCard
                         key={cat.id}

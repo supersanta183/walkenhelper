@@ -113,8 +113,8 @@ const CatCard = ({ cat, updateUser, fetchUser, user }) => {
     }
 
     return (
-        <div className="card flex justify-center items-center lg:w-96 bg-base-100 bg-opacity-80 shadow-xl border-2 border-primary hover:border-primary-focus mt-5 lg:ml-5 ml-2 mr-2 text-center h-72">
-            <div className="card-body w-full">
+        <div className="card flex justify-center items-center w-full lg:w-96 bg-base-100 bg-opacity-80 shadow-xl border-2 border-primary hover:border-primary-focus mt-5 lg:ml-5 text-center h-72">
+            <div className="card-body">
                 <div className='flex items-center justify-between'>
                     <div className='flex items-center justify-center w-full'>
                         <h2 className="card-title text-right pr-2">{cat.name}</h2>
