@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
-import { getAuth, GoogleAuthProvider } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
 const clientCredentials = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -18,4 +18,19 @@ const storage = getStorage(app)
 const auth = getAuth(app)
 const googleAuthProvider = new GoogleAuthProvider()
 
-export { db, storage, auth, googleAuthProvider }
+const signInWithGoogle = () => {
+    signInWithPopup(auth, googleAuthProvider).then((result) => {
+        const name = result.user.displayName
+        const email = result.user.email
+        const profilePic = result.user.photoURL
+
+        localStorage.setItem("name", name)
+        localStorage.setItem("email", email)
+        localStorage.setItem("profilePic", profilePic)
+        console.log(result)
+    }).catch((err) => {
+        console.log("error logging in")
+    })
+}
+
+export { db, storage, auth, googleAuthProvider, signInWithGoogle }
