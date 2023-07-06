@@ -30,6 +30,7 @@ const signInWithGoogle = () => {
         console.log(result)
     }).catch((err) => {
         console.log("error logging in")
+        console.log(err)
     })
 }
 
