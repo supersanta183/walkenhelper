@@ -14,7 +14,7 @@ const UserDropdown = ({ user, setUser }) => {
     }
 
     return (
-        <div className='dropdown dropdown-end' onClick={() => setIsOpen(true)}>
+        <div className='dropdown dropdown-end mr-5' onClick={() => setIsOpen(true)}>
             <label tabIndex={0} className="btn btn-xl sm:btn-sm md:btn-md lg:btn-lg flex text-center mt-4 bg-opacity-80">
                 {user || 'select User'}
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

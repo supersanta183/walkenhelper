@@ -1,6 +1,5 @@
 
 - authentification
-- mulighed for at fjerne kat
 - tilføj toast i hjørnet når der tilføjes/fjernes en match
 - gøre det muligt at skifte bruger i statistics (evt. rykke den op i navbaren)
 - tilføj animationer når man hover knapper osv.
