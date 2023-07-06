@@ -19,6 +19,7 @@ const Navbar = () => {
   const signIn = async () => {
     await signInWithGoogle().then(() => {
       const id = localStorage.getItem("userid")
+      console.log(id)
       if (id) {
         setUserId(id)
       }
@@ -35,7 +36,7 @@ const Navbar = () => {
           </label>
           {
             hamburgerMenuIsOpen &&
-            <ul tabIndex={0} className='menu menu-sm dropdown-content -translate-x-40 z-[1] shadow bg-base-200 rounded-box w-52'>
+            <ul tabIndex={0} className='menu menu-sm dropdown-content z-[1] shadow bg-base-200 rounded-box w-52'>
               <li><Link href='/' className="btn btn-ghost normal-case text-xl">Home</Link></li>
               <li><Link href='/cathletics' className="btn btn-ghost normal-case text-xl">My Cathletics</Link></li>
               <li><Link href='/statistics' className="btn btn-ghost normal-case text-xl">Statistics</Link></li>
@@ -52,10 +53,13 @@ const Navbar = () => {
         </div>
       </div>
       <div className='navbar-end'>
-        <button className='btn btn-ghost normal-case text-xl' onClick={signIn}>
+        { !user &&
+          <button className='btn btn-ghost normal-case text-xl' onClick={signIn}>
           Login
         </button>
+        }
       </div>
+      
     </div>
   )
 }

@@ -33,10 +33,9 @@ const signInWithGoogle = async () => {
         localStorage.setItem("email", email);
         localStorage.setItem("profilePic", profilePic);
         localStorage.setItem("userid", uid);
-
         let userRef = query(collection(db, "users"), where("id", "==", uid));
         const querySnapshot = await getDocs(userRef);
-        if(querySnapshot) {
+        if(!querySnapshot) {
             return
         }
 
