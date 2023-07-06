@@ -1,17 +1,29 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-
 import { signInWithGoogle } from '@/firebase/firebaseApp'
+
+import { useGlobalContext } from '@/app/Context/store'
 
 const Navbar = () => {
   const [hamburgerMenuIsOpen, setHamburgerMenuIsOpen] = useState(false)
+  const { userId, setUserId, user, setUser } = useGlobalContext()
 
   const toggleHamburgerMenu = async () => {
     if (hamburgerMenuIsOpen === true) {
       await new Promise(r => setTimeout(r, 200));
     }
     setHamburgerMenuIsOpen(!hamburgerMenuIsOpen)
+  }
+
+  const signIn = async () => {
+    await signInWithGoogle().then(() => {
+      const id = localStorage.getItem("userid")
+      console.log(id)
+      if (id) {
+        setUserId(id)
+      }
+    })
   }
 
   return (
@@ -24,7 +36,7 @@ const Navbar = () => {
           </label>
           {
             hamburgerMenuIsOpen &&
-            <ul tabIndex={0} className='menu menu-sm dropdown-content -translate-x-40 z-[1] shadow bg-base-200 rounded-box w-52'>
+            <ul tabIndex={0} className='menu menu-sm dropdown-content z-[1] shadow bg-base-200 rounded-box w-52'>
               <li><Link href='/' className="btn btn-ghost normal-case text-xl">Home</Link></li>
               <li><Link href='/cathletics' className="btn btn-ghost normal-case text-xl">My Cathletics</Link></li>
               <li><Link href='/statistics' className="btn btn-ghost normal-case text-xl">Statistics</Link></li>
@@ -41,10 +53,13 @@ const Navbar = () => {
         </div>
       </div>
       <div className='navbar-end'>
-        <button className='btn btn-ghost normal-case text-xl' onClick={signInWithGoogle}>
+        { !user &&
+          <button className='btn btn-ghost normal-case text-xl' onClick={signIn}>
           Login
         </button>
+        }
       </div>
+      
     </div>
   )
 }
