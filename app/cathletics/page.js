@@ -1,12 +1,11 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { db } from '@/firebase/firebaseApp'
-import { collection, query, where, getDocs } from 'firebase/firestore'
 
 import { updateUser } from '@/components/FetchUser';
 import UserDropdown from '@/components/UserDropdown';
 import CatCard from './CatCard'
 import AddCat from './AddCat';
+import fetchUser from '@/components/FetchUser';
 
 
 const CathleticsPage = () => {
@@ -15,32 +14,23 @@ const CathleticsPage = () => {
     const [newCatRarity, setNewCatRarity] = useState(null)
     const [user, setUser] = useState('Emil')
     const [fetchedUser, setFetchedUser] = useState(null)
-    const [isOpen, setIsOpen] = useState(false)
 
+    //fetch user on mount
     useEffect(() => {
         let user = localStorage.getItem('user')
         if (user) {
             setUser(user)
         }
-        getUser()
+        fetchAndSetUser()
     }, [])
 
     useEffect(() => {
-        getUser()
-        setIsOpen(false)
+        fetchAndSetUser()
     }, [user])
 
-    const getUser = async () => {
+    const fetchAndSetUser = async () => {
         if (!user) return
-        const userRef = query(collection(db, "users"), where("name", "==", user))
-        await getDocs(userRef).then((result) => {
-            setFetchedUser(result.docs[0].data())
-        })
-    }
-
-    const handleUserSelection = (value) => {
-        localStorage.setItem('user', value)
-        setUser(value)
+        setFetchedUser(await fetchUser(user))
     }
 
     if (!fetchedUser) return (
@@ -75,16 +65,14 @@ const CathleticsPage = () => {
                 </div>
                 <div className='navbar-end'>
                     <UserDropdown
-                        handleUserSelection={handleUserSelection}
-                        isOpen={isOpen}
-                        setIsOpen={setIsOpen}
+                        setUser={setUser}
                         user={user}
                     />
                 </div>
             </div>
             <div className='flex flex-col lg:flex-row h-full flex-wrap'>
                 {fetchedUser.cats.map((cat) => (
-                    <CatCard key={cat.id} cat={cat} updateUser={updateUser} user={fetchedUser} fetchUser={getUser} />
+                    <CatCard key={cat.id} cat={cat} updateUser={updateUser} user={fetchedUser} fetchUser={fetchAndSetUser} />
                 ))}
             </div>
 

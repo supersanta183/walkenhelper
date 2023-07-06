@@ -1,6 +1,18 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 
-const UserDropdown = ({ handleUserSelection, isOpen, setIsOpen, user }) => {
+const UserDropdown = ({ user, setUser }) => {
+    const [isOpen, setIsOpen] = useState(false)
+
+    useEffect(() => {
+        setIsOpen(false)
+    }, [user])
+
+    const handleUserSelection = (value) => {
+        localStorage.setItem('user', value)
+        setUser(value)
+    }
+
     return (
         <div className='dropdown dropdown-end' onClick={() => setIsOpen(true)}>
             <label tabIndex={0} className="btn btn-xl sm:btn-sm md:btn-md lg:btn-lg flex text-center mt-4 bg-opacity-80">

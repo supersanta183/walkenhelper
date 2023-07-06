@@ -1,5 +1,7 @@
 
-- opdater matches, så de indeholder kattens league, når de tilføjes.
-- opdater statistics så den tager højde for hvilken leagu der kæmpes i.
 - authentification
 - mulighed for at fjerne kat
+- tilføj toast i hjørnet når der tilføjes/fjernes en match
+- gøre det muligt at skifte bruger i statistics (evt. rykke den op i navbaren)
+- tilføj animationer når man hover knapper osv.
+- brug ikoner til forskellige knapper (f.eks. et hus til home)

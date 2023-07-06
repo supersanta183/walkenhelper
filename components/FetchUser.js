@@ -5,9 +5,8 @@ import { collection, getDocs, query, where, setDoc, doc } from 'firebase/firesto
 const fetchUser = async (user) => {
     if (!user) return
     const userRef = query(collection(db, "users"), where("name", "==", user))
-    const fetchedUser = await getDocs(userRef)
-
-    return fetchedUser.docs[0].data()
+    const result = await getDocs(userRef)
+    return result.docs[0].data()
 }
 
 const updateUser = async (user) => {
