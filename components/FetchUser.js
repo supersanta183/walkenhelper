@@ -1,5 +1,7 @@
 import { db } from '@/firebase/firebaseApp'
-import { collection, getDocs, query, where, setDoc, doc, deleteDoc } from 'firebase/firestore'
+import { collection, getDocs, query, where, setDoc, doc } from 'firebase/firestore'
+
+import { backupCat } from './FetchCats'
 
 
 const fetchUser = async (user) => {
@@ -15,6 +17,9 @@ const updateUser = async (user) => {
 }
 
 const deleteCat = async (user, cat) => {
+    cat.user = user.name
+    backupCat(cat)
+
     const cats = user.cats
     if(cats.length === 1) {
         user.cats = []

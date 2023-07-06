@@ -1,5 +1,5 @@
 import { db } from '@/firebase/firebaseApp'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, query, where, setDoc, doc } from 'firebase/firestore'
 
 
 const fetchCats = async () => {
@@ -10,4 +10,10 @@ const fetchCats = async () => {
   return catList
 }
 
+const backupCat = async (cat) => {
+  const catRef = collection(db, "cats")
+  await setDoc(doc(catRef, cat.id.toString()), cat)
+}
+
 export default fetchCats
+export { backupCat }
