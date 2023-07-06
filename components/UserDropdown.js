@@ -9,7 +9,7 @@ const UserDropdown = ({ user, setUser }) => {
     }, [user])
 
     const handleUserSelection = (value) => {
-        localStorage.setItem('user', value)
+        localStorage.setItem('userid', value)
         setUser(value)
     }
 
@@ -24,8 +24,8 @@ const UserDropdown = ({ user, setUser }) => {
             {
                 isOpen &&
                 <ul tabIndex={0} className="p-2 z-10 shadow menu dropdown-content bg-base-100 rounded-box w-52">
-                    <li onClick={() => handleUserSelection('Emil')}><a>Emil </a></li>
-                    <li onClick={() => handleUserSelection('Bjarke')}><a>Bjarke</a></li>
+                    <li onClick={() => handleUserSelection('dc544abe-8559-43b2-8294-4f1182b44ad1')}><a>Emil </a></li>
+                    <li onClick={() => handleUserSelection('d89cf4e3-eaa5-406b-97e6-9252d8c6daf0')}><a>Bjarke</a></li>
                 </ul>
             }
         </div>

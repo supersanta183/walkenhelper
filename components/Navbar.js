@@ -1,17 +1,28 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-
 import { signInWithGoogle } from '@/firebase/firebaseApp'
+
+import { useGlobalContext } from '@/app/Context/store'
 
 const Navbar = () => {
   const [hamburgerMenuIsOpen, setHamburgerMenuIsOpen] = useState(false)
+  const { userId, setUserId, user, setUser } = useGlobalContext()
 
   const toggleHamburgerMenu = async () => {
     if (hamburgerMenuIsOpen === true) {
       await new Promise(r => setTimeout(r, 200));
     }
     setHamburgerMenuIsOpen(!hamburgerMenuIsOpen)
+  }
+
+  const signIn = async () => {
+    await signInWithGoogle().then(() => {
+      const id = localStorage.getItem("userid")
+      if (id) {
+        setUserId(id)
+      }
+    })
   }
 
   return (
@@ -41,7 +52,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className='navbar-end'>
-        <button className='btn btn-ghost normal-case text-xl' onClick={signInWithGoogle}>
+        <button className='btn btn-ghost normal-case text-xl' onClick={signIn}>
           Login
         </button>
       </div>

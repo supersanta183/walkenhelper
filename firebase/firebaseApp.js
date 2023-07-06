@@ -1,7 +1,8 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
+import { getDoc, getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { setDoc, collection, doc, getDocs, query, where } from 'firebase/firestore'
 
 const clientCredentials = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -18,20 +19,41 @@ const storage = getStorage(app)
 const auth = getAuth(app)
 const googleAuthProvider = new GoogleAuthProvider()
 
-const signInWithGoogle = () => {
-    signInWithPopup(auth, googleAuthProvider).then((result) => {
-        const name = result.user.displayName
-        const email = result.user.email
-        const profilePic = result.user.photoURL
 
-        localStorage.setItem("name", name)
-        localStorage.setItem("email", email)
-        localStorage.setItem("profilePic", profilePic)
-        console.log(result)
-    }).catch((err) => {
-        console.log("error logging in")
-        console.log(err)
-    })
+const signInWithGoogle = async () => {
+
+    try {
+        const result = await signInWithPopup(auth, googleAuthProvider);
+        const name = result.user.displayName;
+        const email = result.user.email;
+        const profilePic = result.user.photoURL;
+        const uid = result.user.uid;
+
+        localStorage.setItem("name", name);
+        localStorage.setItem("email", email);
+        localStorage.setItem("profilePic", profilePic);
+        localStorage.setItem("userid", uid);
+
+        let userRef = query(collection(db, "users"), where("id", "==", uid));
+        const querySnapshot = await getDocs(userRef);
+        if(querySnapshot) {
+            return
+        }
+
+        const user = {
+            id: uid,
+            name: name,
+            email: email,
+            cats: [],
+            matches: [],
+        };
+
+        userRef = collection(db, "users")
+        await setDoc(doc(userRef, uid.toString()), user);
+
+    } catch (error) {
+        console.log("Error logging in:", error);
+    }
 }
 
 export { db, storage, auth, googleAuthProvider, signInWithGoogle }

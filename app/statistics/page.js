@@ -7,6 +7,7 @@ import ProfitChart from './ProfitChart'
 import BarChartRepresentation from './BarChartRepresentation'
 import fetchUser from '@/components/FetchUser'
 import TotalProfitBar from './TotalProfitBar'
+import { useGlobalContext } from '../Context/store'
 
 const page = () => {
   const [cats, setCats] = useState(null)
@@ -18,6 +19,7 @@ const page = () => {
   const [fetchedUser, setFetchedUser] = useState(null)
   const [berryPack, setBerryPack] = useState(5000)
   const [berryPrice, setBerryPrice] = useState(0.084998)
+  const { userId, setUserId, user, setUser } = useGlobalContext()
 
   useEffect(() => {
     if (!matches) return
@@ -35,10 +37,10 @@ const page = () => {
 
 
   useEffect(() => {
-    if (!fetchedUser) return
-    setCats(fetchedUser.cats)
-    setMatches(fetchedUser.matches)
-  }, [fetchedUser])
+    if (!user) return
+    setCats(user.cats)
+    setMatches(user.matches)
+  }, [user])
 
   useEffect(() => {
     const tempBerryPack = localStorage.getItem("berrypack")
@@ -86,7 +88,7 @@ const page = () => {
       tempUser = 'Emil'
     }
     const x = await fetchUser(tempUser).then((data) => {
-      setFetchedUser(data)
+      setUser(data)
     })
   }
 

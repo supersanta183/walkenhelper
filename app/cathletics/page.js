@@ -6,34 +6,35 @@ import UserDropdown from '@/components/UserDropdown';
 import CatCard from './CatCard'
 import AddCat from './AddCat';
 import fetchUser from '@/components/FetchUser';
+import { useGlobalContext } from '../Context/store';
 
 
 const CathleticsPage = () => {
     const [newCatName, setNewCatName] = useState(null)
     const [newCatLevel, setNewCatLevel] = useState(null)
     const [newCatRarity, setNewCatRarity] = useState(null)
-    const [user, setUser] = useState('Emil')
     const [fetchedUser, setFetchedUser] = useState(null)
+    const { userId, setUserId, user, setUser } = useGlobalContext()
 
     //fetch user on mount
     useEffect(() => {
-        let user = localStorage.getItem('user')
-        if (user) {
-            setUser(user)
+        let userID = localStorage.getItem('userid')
+        if (userID) {
+            setUserId(userID)
         }
         fetchAndSetUser()
     }, [])
 
     useEffect(() => {
         fetchAndSetUser()
-    }, [user])
+    }, [userId])
 
     const fetchAndSetUser = async () => {
-        if (!user) return
-        setFetchedUser(await fetchUser(user))
+        if (!userId) return
+        setUser(await fetchUser(userId))
     }
 
-    if (!fetchedUser) return (
+    if (!user) return (
         <div className='flex items-center justify-center h-full'>
             <span className="loading loading-spinner loading-lg"></span>
         </div>
@@ -51,7 +52,7 @@ const CathleticsPage = () => {
                     setNewCatRarity={setNewCatRarity}
                     newCatRarity={newCatRarity}
                     updateUser={updateUser}
-                    fetchedUser={fetchedUser}
+                    fetchedUser={user}
                 />
 
             <div className='navbar p-0'>
@@ -64,18 +65,18 @@ const CathleticsPage = () => {
                 </div>
                 <div className='navbar-end'>
                     <UserDropdown
-                        setUser={setUser}
-                        user={user}
+                        setUser={setUserId}
+                        user={userId}
                     />
                 </div>
             </div>
             <div className='flex w-screen px-2 flex-col lg:flex-row h-full flex-wrap'>
-                {fetchedUser.cats.map((cat) => (
+                {user.cats.map((cat) => (
                     <CatCard
                         key={cat.id}
                         cat={cat}
                         updateUser={updateUser}
-                        user={fetchedUser}
+                        user={user}
                         fetchUser={fetchAndSetUser}
                     />
                 ))}
