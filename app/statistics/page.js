@@ -16,7 +16,6 @@ const page = () => {
   const [barchartData, setBarchartData] = useState([])
   const [profitData, setProfitData] = useState([])
   const [totalProfit, setTotalProfit] = useState(0)
-  const [fetchedUser, setFetchedUser] = useState(null)
   const [berryPack, setBerryPack] = useState(5000)
   const [berryPrice, setBerryPrice] = useState(0.084998)
   const { userId, setUserId, user, setUser } = useGlobalContext()
@@ -134,22 +133,24 @@ const page = () => {
   )
 
   return (
-    <div className='min-h-full bg-base-100 bg-opacity-80 bg-fixed bg-cover'>
-      {/* grafer i toppen */}
-      <div className='w-full flex flex-col lg:flex-row'>
-        <div className='lg:w-1/2 w-full'>
-          <ProfitChart data={profitData} />
+    <div className='min-h-auto bg-base-100 bg-opacity-80'>
+      <div className='h-full'>
+        {/* grafer i toppen */}
+        <div className='w-full flex flex-col lg:flex-row'>
+          <div className='lg:w-1/2 w-full'>
+            <ProfitChart data={profitData} />
+          </div>
+          <div className='lg:w-1/2 w-full'>
+            <BarChartRepresentation matches={matches} data={barchartData} />
+          </div>
         </div>
-        <div className='lg:w-1/2 w-full'>
-          <BarChartRepresentation matches={matches} data={barchartData} />
+        <div className=''>
+          <TotalProfitBar totalProfit={totalProfit} berryPack={berryPack} setBerryPack={setBerryPack} />
         </div>
-      </div>
-      <div className=''>
-        <TotalProfitBar totalProfit={totalProfit} berryPack={berryPack} setBerryPack={setBerryPack} />
-      </div>
-      {/* tabell i bunden, met katte og deres winrate */}
-      <div className='flex justify-center'>
-        <CatTable cats={cats} />
+        {/* tabell i bunden, met katte og deres winrate */}
+        <div className='flex justify-center'>
+          <CatTable cats={cats} />
+        </div>
       </div>
     </div>
   )

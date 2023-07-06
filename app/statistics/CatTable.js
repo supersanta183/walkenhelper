@@ -2,7 +2,7 @@ import React from 'react'
 
 const CatTable = ({ cats }) => {
     return (
-        <div className="overflow-x-auto w-full rounded-xl">
+        <div className="overflow-auto w-full h-full rounded-xl mb-0">
             <table className="table">
                 {/* head */}
                 <thead>
