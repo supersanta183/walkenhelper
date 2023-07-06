@@ -82,11 +82,12 @@ const page = () => {
 
   const getUser = async () => {
     let tempUser = localStorage.getItem('user')
-    if (tempUser) {
-      const x = await fetchUser(tempUser).then((data) => {
-        setFetchedUser(data)
-      })
+    if (!tempUser) {
+      tempUser = 'Emil'
     }
+    const x = await fetchUser(tempUser).then((data) => {
+      setFetchedUser(data)
+    })
   }
 
   const createData = () => {
