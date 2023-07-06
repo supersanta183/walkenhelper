@@ -2,6 +2,8 @@
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid';
 
+import { deleteCat } from '@/components/FetchUser';
+
 const CatCard = ({ cat, updateUser, fetchUser, user }) => {
 
     const calculateWinrate = async () => {
@@ -59,10 +61,10 @@ const CatCard = ({ cat, updateUser, fetchUser, user }) => {
     }
 
     const handleRemoveMatch = async (result) => {
-        if(result === 'win' && cat.PVPwins === 0) {
+        if (result === 'win' && cat.PVPwins === 0) {
             return
         }
-        if(result === 'loss' && cat.PVPlosses === 0) {
+        if (result === 'loss' && cat.PVPlosses === 0) {
             return
         }
 
@@ -79,7 +81,7 @@ const CatCard = ({ cat, updateUser, fetchUser, user }) => {
         }
         for (let i = matches.length - 1; i >= 0; i--) {
             if (matches[i].result === result) {
-                if(i === 0) {
+                if (i === 0) {
                     matches.shift()
                 } else {
                     matches.splice(i, i)
@@ -95,21 +97,36 @@ const CatCard = ({ cat, updateUser, fetchUser, user }) => {
     }
 
     const decrementWinLoss = (result) => {
-        switch(result) {
+        switch (result) {
             case 'win':
                 cat.PVPwins -= 1
                 break;
             case 'loss':
                 cat.PVPlosses -= 1
-                break; 
+                break;
         }
+    }
+
+    const removeCat = async () => {
+        await deleteCat(user, cat)
+        fetchUser()
     }
 
     return (
         <div className="card flex justify-center items-center lg:w-96 bg-base-100 bg-opacity-80 shadow-xl border-2 border-primary hover:border-primary-focus mt-5 lg:ml-5 ml-2 mr-2 text-center h-72">
             <div className="card-body w-full">
-                <div className='flex items-center justify-center'>
-                    <h2 className="card-title text-right">{cat.name} <div className="badge badge-accent">Level: {cat.level}</div></h2>
+                <div className='flex items-center justify-between'>
+                    <div className='flex items-center justify-center w-full'>
+                        <h2 className="card-title text-right pr-2">{cat.name}</h2>
+                        <div className="badge badge-accent">Level: {cat.level}</div>
+                    </div>
+                    <div className='flex items-center'>
+                        <button className='btn bg-transparent border-0' onClick={removeCat}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="red" className="w-6 h-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
                 <div className='flex justify-center max-w-fit'>
                     <div className=''>

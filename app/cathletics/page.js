@@ -54,7 +54,6 @@ const CathleticsPage = () => {
                 fetchedUser={fetchedUser}
             />
 
-
             <div className='navbar'>
                 <div className='navbar-start'>
                     <button className="btn btn-xl sm:btn-sm md:btn-md lg:btn-lg flex text-center mt-4 bg-opacity-80" onClick={() => window.my_modal_5.showModal()}>Add cathletic
@@ -72,7 +71,13 @@ const CathleticsPage = () => {
             </div>
             <div className='flex flex-col lg:flex-row h-full flex-wrap'>
                 {fetchedUser.cats.map((cat) => (
-                    <CatCard key={cat.id} cat={cat} updateUser={updateUser} user={fetchedUser} fetchUser={fetchAndSetUser} />
+                    <CatCard
+                        key={cat.id}
+                        cat={cat}
+                        updateUser={updateUser}
+                        user={fetchedUser}
+                        fetchUser={fetchAndSetUser}
+                    />
                 ))}
             </div>
 

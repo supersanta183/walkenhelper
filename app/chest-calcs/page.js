@@ -19,7 +19,7 @@ const page = () => {
     const [droprate, setDroprate] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
     const calculateDroprate = () => {
-        if(teamLeaderRarity === "NONE"){
+        if (teamLeaderRarity === "NONE") {
             setDroprate([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
             return
         }
