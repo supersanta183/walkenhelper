@@ -62,7 +62,7 @@ const CathleticsPage = () => {
                     </button>
                 </div>
             </div>
-            <div className='flex w-screen px-2 flex-col lg:flex-row h-full flex-wrap'>
+            <div className='flex w-screen px-2 flex-col h-full lg:flex-wrap'>
                 {user.cats.map((cat) => (
                     <CatCard
                         key={cat.id}
