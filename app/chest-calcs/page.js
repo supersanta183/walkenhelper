@@ -47,13 +47,8 @@ const page = () => {
         return tempDroprate
     }
 
-    const handleHej = () => {
-        console.log(auth.currentUser)
-    }
-
     return (
         <div className='h-full max-w-screen'>
-        <button className='btn' onClick={handleHej}>hej</button>
             <div className='card flex items-center justify-center flex-grow px-2'>
                 <div className='card-actions mt-5 bg-base-200 bg-opacity-80 rounded-2xl flex flex-col justify-center card-bordered shadow-xl'>
                     <div className='flex'>

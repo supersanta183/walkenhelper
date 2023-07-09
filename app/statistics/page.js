@@ -133,7 +133,7 @@ const page = () => {
   )
 
   return (
-    <div className='min-h-auto bg-base-100 bg-opacity-80'>
+    <div className='min-h-full h-auto bg-base-100 bg-opacity-80'>
       <div className='h-full'>
         {/* grafer i toppen */}
         <div className='w-full flex flex-col lg:flex-row'>
