@@ -20,7 +20,7 @@ const ProfitChart = ({ data }) => {
                         >
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="date" />
-                            <YAxis />
+                            <YAxis domain={[0, 'dataMax + 100']} />
                             <Tooltip />
                             <Legend />
                             <Line type="monotone" dataKey="profit" stroke="#8884d8" activeDot={{ r: 8 }} />
