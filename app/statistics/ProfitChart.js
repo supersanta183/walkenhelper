@@ -8,7 +8,7 @@ const ProfitChart = ({ data }) => {
             <div className=' mt-5 card w-full'>
                 <div className='card-body flex flex-col justify-center items-center'>
                     <h2 className="card-title text-center">Profit per day</h2>
-                    <ResponsiveContainer width="100%" height={300}>
+                    <ResponsiveContainer width="100%" height={500}>
                         <LineChart
                             data={data}
                             margin={{
