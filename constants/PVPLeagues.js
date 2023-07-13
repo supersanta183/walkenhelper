@@ -37,9 +37,9 @@ const LOWEPIC = {
 
 //mid tier leagues
 const MIDCUNC = {
-    entranceFee : 10,
+    entranceFee : 25,
     boostFee : 0,
-    reward : 10,
+    reward : 5,
 }
 
 const MIDRUNC = {
