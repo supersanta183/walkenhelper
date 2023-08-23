@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 
-import { updateUser } from '@/components/FetchUser';
 import CatCard from './CatCard'
 import AddCat from './AddCat';
 import fetchUser from '@/components/FetchUser';
@@ -12,7 +11,7 @@ const CathleticsPage = () => {
     const [newCatName, setNewCatName] = useState(null)
     const [newCatLevel, setNewCatLevel] = useState(null)
     const [newCatRarity, setNewCatRarity] = useState(null)
-    const { userId, setUserId, user, setUser } = useGlobalContext()
+    const { userId, setUserId, user, setUser, updateUser } = useGlobalContext()
 
     const fetchAndSetUser = async () => {
         if (!userId) return
