@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getDoc, getFirestore } from 'firebase/firestore'
-import { getStorage } from 'firebase/storage'
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { getMetadata, getStorage } from 'firebase/storage'
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
 import { setDoc, collection, doc, getDocs, query, where } from 'firebase/firestore'
 
 const clientCredentials = {
@@ -21,9 +21,7 @@ const googleAuthProvider = new GoogleAuthProvider()
 
 
 const signInWithGoogle = async () => {
-
-    try {
-        const result = await signInWithPopup(auth, googleAuthProvider);
+    signInWithPopup(auth, googleAuthProvider).then((result) => {
         const name = result.user.displayName;
         const email = result.user.email;
         const profilePic = result.user.photoURL;
@@ -33,26 +31,34 @@ const signInWithGoogle = async () => {
         localStorage.setItem("email", email);
         localStorage.setItem("profilePic", profilePic);
         localStorage.setItem("userid", uid);
-        let userRef = query(collection(db, "users"), where("id", "==", uid));
-        const querySnapshot = await getDocs(userRef);
-        if(!querySnapshot) {
-            return
+        if(result.user.metadata.creationTime === result.user.metadata.lastSignInTime) {
+            const user = {
+                id: uid,
+                name: name,
+                email: email,
+                cats: [],
+                matches: [],
+            };
+    
+            try{
+                userRef = collection(db, "users")
+                setDoc(doc(userRef, uid.toString()), user)
+
+            } catch (error) {
+                console.log("Error adding user to the database", error)
+            }
         }
-
-        const user = {
-            id: uid,
-            name: name,
-            email: email,
-            cats: [],
-            matches: [],
-        };
-
-        userRef = collection(db, "users")
-        await setDoc(doc(userRef, uid.toString()), user);
-
-    } catch (error) {
-        console.log("Error logging in:", error);
-    }
+    }).catch((error) => {
+        console.log("error signing in ", error)
+    })
 }
 
-export { db, storage, auth, googleAuthProvider, signInWithGoogle }
+const SignoutWithGoogle = async () => {
+    signOut(auth).then(() => {
+        console.log("Signed out succesfully")
+    }).catch((error) => {
+        console.log("Error, could not sign out: ", error)
+    })
+}
+
+export { db, storage, auth, googleAuthProvider, signInWithGoogle, SignoutWithGoogle }

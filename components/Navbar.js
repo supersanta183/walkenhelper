@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { signInWithGoogle } from '@/firebase/firebaseApp'
+import { signInWithGoogle, SignoutWithGoogle } from '@/firebase/firebaseApp'
 
 import { useGlobalContext } from '@/app/Context/store'
 
@@ -24,6 +24,12 @@ const Navbar = () => {
         setUserId(id)
       }
     })
+  }
+
+  const signOut = async () => {
+    SignoutWithGoogle()
+    setUserId("")
+    setUser(null)
   }
 
   return (
@@ -57,6 +63,9 @@ const Navbar = () => {
           <button className='btn btn-ghost normal-case text-xl' onClick={signIn}>
           Login
         </button>
+        }
+        { user &&
+          <button className='btn btn-ghost normal-case text-xl' onClick={signOut}>Logout</button>
         }
       </div>
       
