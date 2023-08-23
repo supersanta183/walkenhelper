@@ -14,19 +14,6 @@ const CathleticsPage = () => {
     const [newCatRarity, setNewCatRarity] = useState(null)
     const { userId, setUserId, user, setUser } = useGlobalContext()
 
-    //fetch user on mount
-    useEffect(() => {
-        let userID = localStorage.getItem('userid')
-        if (userID) {
-            setUserId(userID)
-        }
-        fetchAndSetUser()
-    }, [])
-
-    useEffect(() => {
-        fetchAndSetUser()
-    }, [userId])
-
     const fetchAndSetUser = async () => {
         if (!userId) return
         setUser(await fetchUser(userId))

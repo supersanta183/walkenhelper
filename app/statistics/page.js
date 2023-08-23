@@ -46,7 +46,6 @@ const page = () => {
     if (tempBerryPack) {
       setBerryPack(tempBerryPack)
     }
-    getUser()
   }, [])
 
   const setPrices = () => {
@@ -79,16 +78,6 @@ const page = () => {
         setBerryPrice(0.0699999)
         break;
     }
-  }
-
-  const getUser = async () => {
-    let tempUser = localStorage.getItem('user')
-    if (!tempUser) {
-      tempUser = 'Emil'
-    }
-    const x = await fetchUser(tempUser).then((data) => {
-      setUser(data)
-    })
   }
 
   const createData = () => {
