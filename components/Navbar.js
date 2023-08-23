@@ -38,7 +38,7 @@ const Navbar = () => {
             hamburgerMenuIsOpen &&
             <ul tabIndex={0} className='menu menu-sm dropdown-content z-[1] shadow bg-base-200 rounded-box w-52'>
               <li><Link href='/' className="btn btn-ghost normal-case text-xl">Home</Link></li>
-              <li><Link href='/cathletics' className="btn btn-ghost normal-case text-xl">My Cathletics</Link></li>
+              <li><Link href='/cathletics' className="btn btn-ghost normal-case text-xl">My Cathletes</Link></li>
               <li><Link href='/statistics' className="btn btn-ghost normal-case text-xl">Statistics</Link></li>
               <li><Link href='/chest-calcs' className="btn btn-ghost normal-case text-xl">Calculate droprate</Link></li>
             </ul>
@@ -47,7 +47,7 @@ const Navbar = () => {
         {/* navbar on large screen */}
         <div className='lg:flex hidden'>
           <Link href='/' className="btn btn-ghost normal-case text-xl">Home</Link>
-          <Link href='/cathletics' className="btn btn-ghost normal-case text-xl">My Cathletics</Link>
+          <Link href='/cathletics' className="btn btn-ghost normal-case text-xl">My Cathletes</Link>
           <Link href='/statistics' className="btn btn-ghost normal-case text-xl">Statistics</Link>
           <Link href='/chest-calcs' className="btn btn-ghost normal-case text-xl">Calculate droprate</Link>
         </div>
